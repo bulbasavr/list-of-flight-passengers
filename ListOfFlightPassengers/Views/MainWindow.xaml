@@ -1,0 +1,173 @@
+﻿<Window x:Class="ListOfFlightPassengers.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ListOfFlightPassengers"
+        xmlns:vm="clr-namespace:ListOfFlightPassengers.ViewModels"
+        mc:Ignorable="d"
+        Title="Passenger List"
+        Height="450"
+        Width="800"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.DataContext>
+        <vm:PassengerListVM />
+    </Window.DataContext>
+
+    <Grid>
+
+        <TabControl>
+
+            <!-- Passenger List -->
+
+            <TabItem Header="Passenger List">
+
+                <DataGrid Margin="3"
+                          IsReadOnly="True"
+                          ItemsSource="{Binding PassengerList}"
+                          AutoGenerateColumns="False"
+                          Background="White"
+                          GridLinesVisibility="None">
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="Departure Time"
+                                            Width="180"
+                                            Binding="{Binding Path=DepartureTime}" />
+
+                        <DataGridTextColumn Header="Flight Number"
+                                            Width="130"
+                                            Binding="{Binding Path=FlightNumber}" />
+
+                        <DataGridTextColumn Header="Passenger Name"
+                                            Width="280"
+                                            Binding="{Binding Path=PassengerName}" />
+
+                        <DataGridTemplateColumn>
+                            
+                            <DataGridTemplateColumn.CellTemplate>
+                                
+                                <DataTemplate>
+                                    
+                                    <Button Content="Delete"
+                                            BorderThickness="0"
+                                            Width="130"
+                                            Height="25"
+                                            Background="#ffdb99"
+                                            Command="{Binding DeleteCommand}" />
+                                    
+                                </DataTemplate>
+                                
+                            </DataGridTemplateColumn.CellTemplate>
+                            
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+            </TabItem>
+
+            <!-- Add Passenger -->
+
+            <TabItem Header="Add Passenger">
+
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+
+                    <TextBlock Text="Departure Date:" />
+
+                    <DatePicker Margin="0,0,0,5"
+                                SelectedDate="{Binding NewDepartureTime}" />
+
+                    <TextBlock Text="Departure Time: "
+                               HorizontalAlignment="Center" />
+
+                    <Border Width="230"
+                            Height="40"
+                            Background="#ffdb99"
+                            CornerRadius="4">
+                        
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+
+                                <TextBlock Text="Hours:  "
+                                           FontSize="18" 
+                                           Foreground="White" />
+                                
+                                <TextBlock Text="{Binding Hours}"
+                                           FontSize="18"
+                                           Foreground="White" />
+                                
+                                <TextBlock Text="Minutes:  "
+                                           Margin="25,0,0,0"
+                                           FontSize="18"
+                                           Foreground="White" />
+                                
+                                <TextBlock Foreground="White"
+                                           FontSize="18"
+                                           Text="{Binding Minutes}" />
+                        
+                            </StackPanel>
+                        
+                    </Border>
+
+                    <StackPanel>
+
+                        <TextBlock Text="Hours: " />
+                        
+                        <Slider Minimum="0"
+                                Maximum="23"
+                                Margin="0,0,0,5"
+                                Value="{Binding Hours}" />
+                        
+                    </StackPanel>
+
+                    <StackPanel>
+
+                        <TextBlock Text="Minutes: " />
+                        
+                        <Slider Minimum="0"
+                                Maximum="59"
+                                Margin="0,0,0,5"
+                                Value="{Binding Minutes}" />
+
+                    </StackPanel>
+
+
+                    <TextBlock Text="Flight Number:" />
+
+                    <TextBox Width="400"
+                             FontSize="14"
+                             Height="30"
+                             Margin="0,0,0,5"
+                             Text="{Binding NewFlightNumber}" />
+
+                    <TextBlock Text="PassengerName:"/>
+
+                    <TextBox Width="400"
+                             FontSize="14"
+                             Height="30"
+                             Margin="0,0,0,5"
+                             Text="{Binding NewPassengerName}" />
+
+                    <Button Content="Add Passenger"
+                            Margin="5"
+                            BorderThickness="0"
+                            Width="100"
+                            Height="35"
+                            HorizontalAlignment="Right"
+                            Background="#ffdb99"
+                            Command="{Binding AddCommand}" />
+
+                </StackPanel>
+
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+    
+</Window>
